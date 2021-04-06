@@ -1,0 +1,107 @@
+---
+title: "Lab 1 EDLD 3"
+author: "Vinita Vader"
+date: "4/2/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+```{r}
+set.seed(123) # Set random number generation
+
+m <- lm(mpg ~ hp + cyl + drat, mtcars)
+
+l <- list(a = list(m = matrix(1:12, ncol = 3),
+              	   v = 1:7),
+          b = data.frame(student = 1:15,
+                         score = rnorm(15, 100, 10)))
+```
+1. From the model results:
+
+Extract the qr tolerance (tol).
+```{r}
+#str(m)
+m$qr$tol
+```
+
+Extract the term labels from the model.
+```{r}
+#str(m)
+attributes(m$terms)[3]
+```
+
+hint: Use str to inspect the list. This one is tricky and involves pulling an attribute from an attribute.
+
+2. From the list
+
+Use at least two different methods to extract m.
+```{r}
+#str(l)
+l$a$m #method 1 - gives a df
+l$a[1] #method 2 - this still looks like a list
+
+```
+
+Extract the third column of m. Maintain the dimensions (matrix structure).
+```{r}
+l$a$m[,3, drop=FALSE]
+l$a$m[1:4,3, drop=FALSE]
+```
+
+
+Extract the score for student 7.
+```{r}
+l$b$score[7]
+```
+
+## Loops
+Use the “airquality” dataset, which is part of base R. Split it by Month
+```{r}
+split(airquality, f = airquality$Month)#Method 1
+airquality %>%   #Method 2
+  group_split(Month)
+```
+
+Use a for loop to calculate the mean Ozone by month (remember to remove missing data from the calculation)
+```{r}
+
+data = airquality %>%
+  drop_na() %>% #drop na 
+    group_split(Month)
+
+Oz.means = rep(NA, length(levels(as.factor(data$Month)))) #5 levels of Month, hence vector of 5 open spots to be filled
+
+for(i in seq_along(Oz.means)){
+   Oz.means[i] = data[[i]] %>% 
+        summarise(mean(Ozone))
+    
+}
+
+Oz.means
+```
+
+
+Replicate this calculation with lapply, sapply, and vapply
+```{r}
+lapply(data, function(x) mean(x$Ozone))
+
+```
+
+
+
+Produce separate plots showing the relation between Ozone and Solar.R for each month (with a single loop).
+```{r}
+
+```
+
+
+
+Use a for loop to save the plots to a folder on your computer
+```{r}
+
+```
+
+
