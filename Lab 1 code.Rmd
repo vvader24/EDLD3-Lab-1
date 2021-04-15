@@ -1,6 +1,6 @@
 ---
 title: "Lab 1 EDLD 3"
-author: "Vinita Vader"
+author: "Vinita Vader & Raleigh Goodwin"
 date: "4/2/2021"
 output: html_document
 ---
@@ -42,6 +42,7 @@ Use at least two different methods to extract m.
 #str(l)
 l$a$m #method 1 - gives a df
 l$a[1] #method 2 - this still looks like a list
+l[[1]]$m #method 3 just because
 
 ```
 
