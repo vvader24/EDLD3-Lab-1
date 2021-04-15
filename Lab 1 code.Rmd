@@ -89,7 +89,6 @@ for(i in seq_along(Oz_means)){
 Oz_means
 ```
 
-
 5. Replicate this calculation with lapply, sapply, and vapply
 ```{r}
 lapply(data, function(x) mean(x$Ozone))
@@ -100,18 +99,36 @@ vapply(data, function(x) mean(x$Ozone), FUN.VALUE = double(1))
 
 ```
 
-
-
 6. Produce separate plots showing the relation between Ozone and Solar.R for each month (with a single loop).
 ```{r}
+by_month <- split(airquality, airquality$Month) # needs to be a list
+
+# str(by_month)
+
+plots <- lapply(by_month, function(x) {
+  ggplot(x, aes(Ozone, Solar.R)) +
+    geom_point() +
+    geom_smooth()
+})
 
 ```
 
-
-
 7. Use a for loop to save the plots to a folder on your computer
 ```{r}
+dir.create(here::here("plots"))
 
+filenames <- here::here("plots",
+                        paste0("Month", names(by_month), ".png"))
+
+filenames
+
+for(i in seq_along(plots)) {
+  ggsave(filenames[i],
+         plots[[i]],
+         device = "png",
+         width = 9,
+         height = 8)
+}
 ```
 
 
