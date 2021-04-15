@@ -19,6 +19,7 @@ l <- list(a = list(m = matrix(1:12, ncol = 3),
           b = data.frame(student = 1:15,
                          score = rnorm(15, 100, 10)))
 ```
+
 1. From the model results:
 
 Extract the qr tolerance (tol).
@@ -52,7 +53,6 @@ l$a$m[,3, drop=FALSE]
 l$a$m[1:4,3, drop=FALSE]
 ```
 
-
 Extract the score for student 7.
 ```{r}
 l$b$score[7]
@@ -63,6 +63,7 @@ l$b$score[7]
 3. Use the “airquality” dataset, which is part of base R. Split it by Month
 ```{r}
 split(airquality, f = airquality$Month)#Method 1
+
 airquality %>%   #Method 2
   group_split(Month)
 ```
@@ -70,25 +71,32 @@ airquality %>%   #Method 2
 4. Use a for loop to calculate the mean Ozone by month (remember to remove missing data from the calculation)
 ```{r}
 
-data = airquality %>%
+data <- airquality %>%
   drop_na() %>% #drop na 
     group_split(Month)
 
-Oz.means = rep(NA, length(levels(as.factor(data$Month)))) #5 levels of Month, hence vector of 5 open spots to be filled
+# Oz_means <- rep(NA, length(levels(as.factor(data$Month)))) #5 levels of Month, hence vector of 5 open spots to be filled -- for some reason this was not working. although i know it's better to be specific to the variables since things can change length, for now, i'll just input length manually until i can troubleshoot
 
-for(i in seq_along(Oz.means)){
-   Oz.means[i] = data[[i]] %>% 
+Oz_means <- rep(NA, 5) #5 levels of Month, hence vector of 5 open spots to be filled
+
+
+for(i in seq_along(Oz_means)){
+   Oz_means[i] <- data[[i]] %>% 
         summarise(mean(Ozone))
     
 }
 
-Oz.means
+Oz_means
 ```
 
 
 5. Replicate this calculation with lapply, sapply, and vapply
 ```{r}
 lapply(data, function(x) mean(x$Ozone))
+
+sapply(data, function(x) mean(x$Ozone))
+
+vapply(data, function(x) mean(x$Ozone), FUN.VALUE = double(1))
 
 ```
 
