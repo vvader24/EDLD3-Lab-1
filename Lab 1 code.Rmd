@@ -58,14 +58,15 @@ l$b$score[7]
 ```
 
 ## Loops
-Use the “airquality” dataset, which is part of base R. Split it by Month
+
+3. Use the “airquality” dataset, which is part of base R. Split it by Month
 ```{r}
 split(airquality, f = airquality$Month)#Method 1
 airquality %>%   #Method 2
   group_split(Month)
 ```
 
-Use a for loop to calculate the mean Ozone by month (remember to remove missing data from the calculation)
+4. Use a for loop to calculate the mean Ozone by month (remember to remove missing data from the calculation)
 ```{r}
 
 data = airquality %>%
@@ -84,7 +85,7 @@ Oz.means
 ```
 
 
-Replicate this calculation with lapply, sapply, and vapply
+5. Replicate this calculation with lapply, sapply, and vapply
 ```{r}
 lapply(data, function(x) mean(x$Ozone))
 
@@ -92,14 +93,14 @@ lapply(data, function(x) mean(x$Ozone))
 
 
 
-Produce separate plots showing the relation between Ozone and Solar.R for each month (with a single loop).
+6. Produce separate plots showing the relation between Ozone and Solar.R for each month (with a single loop).
 ```{r}
 
 ```
 
 
 
-Use a for loop to save the plots to a folder on your computer
+7. Use a for loop to save the plots to a folder on your computer
 ```{r}
 
 ```
